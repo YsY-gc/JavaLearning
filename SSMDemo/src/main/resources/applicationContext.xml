@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userDao" class="com.ysy.dao.impl.UserDaoImpl">
+        <property name="age" value="18"></property>
+        <property name="userName" value="zhangsan"></property>
+    </bean>
+
+<!--    <bean id="userService" class="com.ysy.service.impl.UserServiceImpl">-->
+<!--        <property name="userDao" ref="userDao"></property>-->
+<!--    </bean>-->
+
+<!--    <bean id="userService" class="com.ysy.service.impl.UserServiceImpl" p:userDao-ref="userDao"></bean>-->
+
+    <bean id="userService" class="com.ysy.service.impl.UserServiceImpl">
+        <constructor-arg name="userDao" ref="userDao"></constructor-arg>
+    </bean>
+
+    <import resource="applicationContext-user.xml"></import>
+
+</beans>

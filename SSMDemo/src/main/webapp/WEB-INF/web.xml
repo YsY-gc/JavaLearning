@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <listener>
+    <listener-class></listener-class>
+  </listener>
+</web-app>
+
+
