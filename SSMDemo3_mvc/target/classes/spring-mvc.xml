@@ -25,9 +25,14 @@
     <!-- 上述配置太繁琐，这行作用同上，但是需要添加mvc命名空间 -->
     <mvc:annotation-driven></mvc:annotation-driven>
 
-    <!-- 开放静态资源的访问 -->
+    <!-- 开放资源的访问 -->
     <!--    <mvc:resources mapping="/js/**" location="/js/"/>-->
 
     <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="50000"></property>
+    </bean>
 
 </beans>

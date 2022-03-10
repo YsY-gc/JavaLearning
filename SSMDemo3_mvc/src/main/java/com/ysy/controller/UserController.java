@@ -5,27 +5,28 @@ import com.ysy.domain.User;
 import com.ysy.domain.VO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 @Controller
 public class UserController {
 
-    @RequestMapping(value="/quickstart", method = RequestMethod.GET,params = {})
-    public String save(){
+    @RequestMapping(value = "/quickstart", method = RequestMethod.GET, params = {})
+    public String save() {
         System.out.println("Controller saving...");
         return "success.jsp";
     }
 
-    @RequestMapping(value="/quickstart2", method = RequestMethod.GET,params = {})
-    public ModelAndView save2(){
+    @RequestMapping(value = "/quickstart2", method = RequestMethod.GET, params = {})
+    public ModelAndView save2() {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("success.jsp");
@@ -34,8 +35,8 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/quickstart3", method = RequestMethod.GET,params = {})
-    public ModelAndView save3(ModelAndView modelAndView){
+    @RequestMapping(value = "/quickstart3", method = RequestMethod.GET, params = {})
+    public ModelAndView save3(ModelAndView modelAndView) {
 
         modelAndView.setViewName("success.jsp");
         modelAndView.addObject("username", "zhangsan");
@@ -43,29 +44,29 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/quickstart4", method = RequestMethod.GET,params = {})
-    public String save4(Model model){
+    @RequestMapping(value = "/quickstart4", method = RequestMethod.GET, params = {})
+    public String save4(Model model) {
 
         model.addAttribute("username", "杨书印");
 
         return "success.jsp";
     }
 
-    @RequestMapping(value="/quickstart6", method = RequestMethod.GET,params = {})
+    @RequestMapping(value = "/quickstart6", method = RequestMethod.GET, params = {})
     public void save6(HttpServletResponse resp) throws IOException {
         resp.getWriter().print("hello world");
     }
 
-    @RequestMapping(value="/quickstart7", method = RequestMethod.GET,params = {})
+    @RequestMapping(value = "/quickstart7", method = RequestMethod.GET, params = {})
     @ResponseBody //告知springmvc框架，不进行视图跳转，直接进行数据响应
     public String save7() throws IOException {
         return "hello world";
     }
 
-    @RequestMapping(value="/quickstart9", method = RequestMethod.GET,params = {})
+    @RequestMapping(value = "/quickstart9", method = RequestMethod.GET, params = {})
     @ResponseBody //告知springmvc框架，不进行视图跳转，直接进行数据响应
     public String save9() throws IOException {
-        User user  = new User();
+        User user = new User();
         user.setUsername("zhangsan");
         user.setAge(18);
 
@@ -78,8 +79,8 @@ public class UserController {
     @RequestMapping("/quickstart10")
     @ResponseBody
     //希望SpringMVC自动将返回的User对象转换为json格式  因此需要进行spring-mvc.xml配置，修改处理器适配器配置
-    public User save10(){
-        User user  = new User();
+    public User save10() {
+        User user = new User();
         user.setUsername("zhangsan");
         user.setAge(18);
 
@@ -89,7 +90,7 @@ public class UserController {
     //http://localhost:8080/mvc/quickstart11?username=zhangsan&age=20
     @RequestMapping("/quickstart11")
     @ResponseBody
-    public void save11(String username, int age){
+    public void save11(String username, int age) {
         System.out.println(username);
         System.out.println(age);
     }
@@ -97,21 +98,61 @@ public class UserController {
     @RequestMapping("/quickstart12")
     @ResponseBody
     //封装pojo
-    public void save12(User user){
+    public void save12(User user) {
         System.out.println(user);
     }
 
     @RequestMapping("/quickstart14")
     @ResponseBody
     //封装pojo
-    public void save14(VO vo){
+    public void save14(VO vo) {
         System.out.println(vo);
     }
 
     @RequestMapping("/quickstart15")
     @ResponseBody
-    public void save15(@RequestBody List<User> userList){
+    public void save15(@RequestBody List<User> userList) {
         System.out.println(userList);
+    }
+
+    @RequestMapping("/quickstart18")
+    @ResponseBody
+    public void save18(HttpServletResponse response, HttpServletRequest request, HttpSession session) {
+
+        System.out.println(response);
+        System.out.println(request);
+        System.out.println(session);
+
+    }
+
+    @RequestMapping("/quickstart19")
+    @ResponseBody
+    public void save19(HttpServletResponse response, HttpServletRequest request, HttpSession session) {
+
+        System.out.println(response);
+        System.out.println(request);
+        System.out.println(session);
+
+    }
+
+    @RequestMapping("/quickstart20")
+    @ResponseBody
+    public void save20(@RequestHeader(value = "User-Agent", required = false) String userAgent) {
+        System.out.println(userAgent);
+    }
+
+    @RequestMapping("/quickstart21")
+    @ResponseBody
+    public void save21(@CookieValue(value = "JSESSIONID") String jsessionid) {
+        System.out.println(jsessionid);
+    }
+
+    @RequestMapping("/quickstart22")
+    @ResponseBody
+    public void save22(String username, MultipartFile uploadFile) throws IOException {
+        System.out.println(username);
+        String originalFilename = uploadFile.getOriginalFilename();
+        uploadFile.transferTo(new File("G://"+originalFilename));
     }
 
 }
