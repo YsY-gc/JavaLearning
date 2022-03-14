@@ -72,5 +72,10 @@ public class UserDaoImpl implements UserDao {
 
     }
 
+    public User login(String username, String password) {
+        User user = jdbcTemplate.queryForObject("select * from sys_user where username=? and password=?", new BeanPropertyRowMapper<User>(User.class), username, password);
+        return user;
+    }
+
 
 }
