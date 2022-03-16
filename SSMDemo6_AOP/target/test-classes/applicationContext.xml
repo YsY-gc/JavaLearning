@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+">
+
+    <!-- 切面对象 -->
+    <bean id="myAspect" class="com.ysy.anno_aop.MyAspect"></bean>
+
+    <!-- 目标对象 -->
+    <bean id="target" class="com.ysy.anno_aop.Target"></bean>
+
+    <!-- 配置织入 -->
+    <aop:config>
+        <aop:aspect ref="myAspect">
+            <aop:before method="before" pointcut="execution(public void com.ysy.anno_aop.Target.save())"></aop:before>
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 使用aspectj 不然会与spring冲突 -->
+    <aop:aspectj-autoproxy  proxy-target-class="true"/>
+
+</beans>
